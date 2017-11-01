@@ -9,8 +9,8 @@
 #include <QPaintEvent>
 #include <QMap>
 #include <QDebug>
-#include <node.h>
 
+#include "node.h"
 #include "nodewidget.h"
 #include "settings.h"
 #include "qxtglobalshortcut.h"

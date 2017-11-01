@@ -10,7 +10,7 @@ QT += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ClipboardAssistant-cpp
+TARGET = FloatingFolder
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -47,5 +47,4 @@ FORMS    += mainwindow.ui \
     trash.ui \
     bucket.ui
 
-RESOURCES += \
-    rsc.qrc
+RESOURCES += rsc.qrc
