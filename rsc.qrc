@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/node/main">
+        <file>Ressources/ImageNode.png</file>
+        <file>Ressources/TextNode.png</file>
+        <file>Ressources/Pin.png</file>
+        <file>Ressources/Trash.png</file>
+        <file>Ressources/Pin-v2.png</file>
+    </qresource>
+</RCC>
