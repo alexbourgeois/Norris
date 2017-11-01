@@ -24,7 +24,7 @@ Application always on top allowing you to easily work with your folders/files.
 
 
 Several shortcut are availables :
-  - "Ctrl+1" to hide/show the application;
-  - "Ctrl+2" to toggle every node;
+  - "F1" to hide/show the application;
+  - "F2" to toggle every node;
  
  
