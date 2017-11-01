@@ -10,19 +10,21 @@ Application always on top allowing you to easily work with your folders/files.
 
 ## How to use ?
 
-* Right click on a node to open it and show folder content.
+* Double click on a node to open it and show folder content.
+
+* Right click on a node to dock it on the left part of the screen.
 
 * Specifiy the working folder and press Enter to reload the node.
 
-* Hold left click and move on a node to move it.
+* Hold left click on a node to move it.
  
-* Double clik on any element inside a node to pin it.
+* Double click on any element inside a node to pin it and create a new node.
 
 * Drop a node on the trash at screen bottom to remove it.
 
 
 Several shortcut are availables :
-  - "Ctrl+1" to hide/show the application;
-  - "Ctrl+2" to toggle every node;
+  - "F1" to hide/show the application;
+  - "F2" to toggle every node;
  
  
