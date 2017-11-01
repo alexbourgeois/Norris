@@ -54,6 +54,7 @@ void Bucket::InitializeClip() {
     listWidget->setResizeMode(QListWidget::Adjust);
     listWidget->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
 
+    ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
     //Set working path
     workingDirectory.setPath(QDir::currentPath() + "/");
     ui->lineEdit->setText(workingDirectory.absolutePath() + "/");
@@ -406,4 +407,21 @@ void Bucket::listWidgetItemDoubleClicked(QListWidgetItem *item)
 {
     emit ItemSelectedByUser(item);
 //   this->setVisible(false);
+}
+
+void Bucket::on_openExplorerButton_clicked()
+{
+    qDebug() << "Opening explorer .. " <<workingDirectory.absolutePath() ;
+    QString program = "explorer";
+       QStringList arguments;
+       QString tempPath = workingDirectory.absolutePath().replace("/", "\\");
+       arguments <<tempPath;// workingDirectory.absolutePath() + "/";
+
+       QProcess *myProcess = new QProcess();
+       myProcess->start(program, arguments);
+
+//    QProcess process;
+//    process.setWorkingDirectory(workingDirectory.absolutePath());
+//    process.start("exporer");//, QStringList() << "gui");
+    QProcess::startDetached("git", QStringList() << "gui", "D:\\MyWork\\Temp\\source");
 }

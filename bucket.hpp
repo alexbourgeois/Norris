@@ -23,6 +23,7 @@
 #include <QDrag>
 #include <QListWidget>
 #include <QStatusBar>
+#include <QProcess>
 
 #include "ui_bucket.h"
 #include "bucket.hpp"
@@ -59,6 +60,8 @@ public:
 private slots:
     void setTargetDirectory() ;
     void listWidgetItemDoubleClicked(QListWidgetItem *item);
+
+    void on_openExplorerButton_clicked();
 
 signals:
     void IWantAFile(QUrl, QString);

@@ -23,7 +23,7 @@
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="spacing">
      <number>3</number>
     </property>
@@ -41,26 +41,28 @@
     </property>
     <item>
      <widget class="QWidget" name="widget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>2</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {background-color: rgb(42, 41, 44);color: rgb(232, 232, 232);
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="openExplorerButton">
+           <property name="text">
+            <string>Open explorer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {background-color: rgb(42, 41, 44);color: rgb(232, 232, 232);
 border-color: rgb(25, 26, 26); }</string>
-         </property>
-         <property name="text">
-          <string>Target folder ...</string>
-         </property>
-        </widget>
+           </property>
+           <property name="text">
+            <string>Target folder ...</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

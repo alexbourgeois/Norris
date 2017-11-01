@@ -60,7 +60,7 @@ MainWindow::~MainWindow()
     for(int i=0 ; i<_nodes.size() ; i++)
         _nodes[i]->deleteLater();
     workerThread.quit();
-    workerThread.wait();
+    //workerThread.wait();
     delete ui;
 }
 
@@ -242,7 +242,7 @@ void MainWindow::SetNight() {
 //    this->setStyleSheet("background-color:rgba(0,0,0,50);");
 
 QPropertyAnimation *dayNightAnimation = new QPropertyAnimation(this, "color");
-    dayNightAnimation->setDuration(150);
+    dayNightAnimation->setDuration(250);
     dayNightAnimation->setStartValue(color());
     dayNightAnimation->setEndValue(QColor(0, 0, 0, 50));
     dayNightAnimation->start();
@@ -257,7 +257,7 @@ void MainWindow::SetDay() {
 
 
     QPropertyAnimation *animation = new QPropertyAnimation(this, "color");
-    animation->setDuration(150);
+    animation->setDuration(250);
     animation->setStartValue(color());
     animation->setEndValue(QColor(0, 0, 0, 0));
     animation->start();
