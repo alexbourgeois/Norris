@@ -44,8 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     HideTrash();
 
-    dayNightAnimation = new QPropertyAnimation(this, "color");
-    animationHasAValue = false;
+    backgroundAlpha = 0;
     SetDay();
     trashWidget->setVisible(true);
 
@@ -89,6 +88,7 @@ void MainWindow::InitializeWindow()
 	flags |= Qt::WindowStaysOnTopHint;
 	flags |= Qt::X11BypassWindowManagerHint;
 	this->setWindowFlags(flags);
+    this->setAttribute(Qt::WA_TranslucentBackground);
 
 
 	
@@ -173,6 +173,7 @@ void MainWindow::WarnNodesFileDownloaded() {
 void MainWindow::NodeMoving(NodeWidget* node) {
     if(!trashVisible) {
         ShowTrash();
+        qDebug() << "Node moving ...";
         SetNight();
     }
 }
@@ -180,6 +181,7 @@ void MainWindow::NodeMoving(NodeWidget* node) {
 void MainWindow::NodeMoved(NodeWidget* node) {
     HideTrash();
     SetDay();
+    qDebug() << "Node moved !";
 
     bool destroyed = false;
     int i=0;
@@ -215,7 +217,7 @@ void MainWindow::ShowTrash() {
     animation->setEndValue(QPoint(x, y));
     animation->setEasingCurve(QEasingCurve::OutExpo);
 
-    animation->start();
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
     trashVisible = true;
 }
 
@@ -231,45 +233,39 @@ void MainWindow::HideTrash() {
     animation->setEasingCurve(QEasingCurve::InExpo);
     //connect(animation, SIGNAL(finished()), this, SLOT(MoveToNode()));
 
-    animation->start();
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
     trashVisible = false;
 }
 
 void MainWindow::SetNight() {
-    //this->setAttribute(Qt::WA_TranslucentBackground, false);
-
-//    backgroundAlpha = 20;
-//    this->setStyleSheet("background-color:rgba(0,0,0,50);");
-
-QPropertyAnimation *dayNightAnimation = new QPropertyAnimation(this, "color");
+    QPropertyAnimation *dayNightAnimation = new QPropertyAnimation(this, "backgroundAlpha");
     dayNightAnimation->setDuration(250);
-    dayNightAnimation->setStartValue(color());
-    dayNightAnimation->setEndValue(QColor(0, 0, 0, 50));
-    dayNightAnimation->start();
-     this->show();
+    dayNightAnimation->setStartValue(backgroundAlpha);
+    dayNightAnimation->setEndValue(75);
+    dayNightAnimation->setDuration(500);
+    dayNightAnimation->setEasingCurve(QEasingCurve::OutExpo);
+    dayNightAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+
     qDebug() << "Set Night";
 }
 
 void MainWindow::SetDay() {
-    this->setAttribute(Qt::WA_TranslucentBackground);
-  //  backgroundAlpha = 1;
-   // this->setStyleSheet("background-color:rgba(0,0,0,0);");
-
-
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "color");
+    QPropertyAnimation *animation = new QPropertyAnimation(this, "backgroundAlpha");
     animation->setDuration(250);
-    animation->setStartValue(color());
-    animation->setEndValue(QColor(0, 0, 0, 0));
-    animation->start();
-    animationHasAValue = true;
+    animation->setStartValue(backgroundAlpha);
+    animation->setEndValue(0);
+    animation->setEasingCurve(QEasingCurve::InExpo);
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 
-    this->show();
     qDebug() << "Set Day";
 }
 
 
 void MainWindow::paintEvent(QPaintEvent *event) {
-
+    QColor backgroundColor = QColor(0,0,0,0);
+    backgroundColor.setAlpha(backgroundAlpha);
+    QPainter customPainter(this);
+    customPainter.fillRect(rect(),backgroundColor);
 //    QColor backgroundColor = palette().light().color();
 //     backgroundColor.setAlpha(backgroundAlpha);
 //     QPainter customPainter(this);

@@ -56,7 +56,7 @@ void Bucket::InitializeClip() {
 
     ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
     //Set working path
-    workingDirectory.setPath(QDir::currentPath() + "/");
+    workingDirectory.setPath("D:/Content/");//QDir::currentPath() + "/");
     ui->lineEdit->setText(workingDirectory.absolutePath() + "/");
     UpdateVisibleFiles();
 }

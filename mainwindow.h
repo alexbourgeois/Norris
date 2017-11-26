@@ -23,7 +23,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-     Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(int backgroundAlpha READ getBackgroundAlpha WRITE setBackgroundAlpha)
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -43,11 +43,19 @@ public:
     void dropEvent(QDropEvent *event);
     void leaveEvent(QEvent* e);
 
-    void setColor (QColor color){
-        setStyleSheet(QString("background-color: rgba(%1, %2, %3, %4);").arg(color.red()).arg(color.green()).arg(color.blue()).arg(color.alpha()));
+    int getBackgroundAlpha() {
+        return backgroundAlpha;
     }
-    QColor color(){
-        return QWidget::palette().color(QWidget::backgroundRole());
+
+    void setBackgroundAlpha(int value) {
+        backgroundAlpha = value;
+        QPalette palette;
+        palette.setBrush(QPalette::Background, QColor(0,0,0,backgroundAlpha));
+        this->setAutoFillBackground(true);
+        setPalette(palette);
+
+        repaint();
+        this->show();
     }
 
 signals:
@@ -67,7 +75,7 @@ public slots:
 public:
     int width;
     int height;
-    int backgroundAlpha;
+    int backgroundAlpha = 255;
     bool trashVisible;
     bool UIVisible;
 
@@ -76,8 +84,6 @@ public:
 private:
 	void InitializeWindow();
 
-    QPropertyAnimation* dayNightAnimation;
-    bool animationHasAValue;
     QThread workerThread;
     QPoint dragPosition;
     DownloadManager *manager;

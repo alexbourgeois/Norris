@@ -28,9 +28,8 @@ class NodeWidget : public QWidget
 public:
     NodeWidget(Node* node, QWidget *parent, int size,  NodeSettings settings);
 	~NodeWidget();
-	void CreatePainter();
-	virtual void paintEvent(QPaintEvent*);
 
+	virtual void paintEvent(QPaintEvent*);
 	virtual void enterEvent(QEvent* e);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mousePressEvent(QMouseEvent *event);

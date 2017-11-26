@@ -25,7 +25,7 @@ NodeWidget::NodeWidget(Node* node,QWidget *parent, int size, NodeSettings settin
     isBucketOpened = false;
     bucket = new Bucket(settings, this->nodeDrawer);
     bucket->setStyleSheet(QString("background-color: rgba(255, 255, 255, 0);"));
-    bucket->setVisible(true);
+    bucket->setVisible(false);
     bucket->move(BottomLeft());
     //ToggleBucket();
 
@@ -172,18 +172,6 @@ void NodeWidget::DockNode() {
     animation->start();
 }
 
-void NodeWidget::CreatePainter()
-{
-	/*p = new QPainter(this);
-	b = new QRadialGradient();
-	b->setColorAt(0.0, Qt::white);
-	b->setColorAt(0.2, Qt::green);
-	b->setColorAt(1.0, Qt::black);
-	p->setBrush(*b);
-	p->setRenderHint(QPainter::Antialiasing, true);
-	p->setPen(QPen(Qt::green, 0));*/
-}
-
 void NodeWidget::MoveTo(int x, int y)
 {
     QPoint target(x, y);
@@ -235,6 +223,10 @@ QString NodeWidget::GetName()
 
 void NodeWidget::paintEvent(QPaintEvent *event)
 {	
+    QColor backgroundColor = QColor(0,0,0);//palette().dark().color();
+     backgroundColor.setAlpha(0);
+     QPainter customPainter(this);
+     customPainter.fillRect(rect(),backgroundColor);
     this->show();
 //	QRadialGradient brush(rect().center().x(), rect().center().y(), _radius);
 //	brush.setColorAt(0.0, _color);
