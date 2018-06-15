@@ -24,6 +24,7 @@
 #include <QListWidget>
 #include <QStatusBar>
 #include <QProcess>
+#include <QScreen>
 
 #include "ui_bucket.h"
 #include "bucket.hpp"

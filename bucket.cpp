@@ -1,5 +1,7 @@
 ﻿#include "bucket.hpp"
 
+#define DEBUG_BUCKET
+
 Bucket::Bucket(NodeSettings settings, QWidget * parent) :
 	QMainWindow(parent),
 	ui(new Ui::Bucket)
@@ -9,8 +11,11 @@ Bucket::Bucket(NodeSettings settings, QWidget * parent) :
 
     connect(ui->lineEdit, SIGNAL(editingFinished()), this, SLOT(setTargetDirectory()));
 
-    width = 315;//this->size().width();
-    height = 444;//this->size().height();
+    QScreen *screen = QApplication::screens().at(0);
+    float screenWidth = screen->availableSize().width();
+    float screenHeight = screen->availableSize().height();
+    width = screenWidth * 0.2;//this->size().width();
+    height = screenHeight * 0.5;//this->size().height();
 
     this->resize(width, 0);
     imageNumber = 0;
@@ -49,14 +54,14 @@ void Bucket::InitializeClip() {
 //    qDebug() << "Width : " << listWidget->width();
 //    qDebug() << "Width2 : " << listWidget->size().width();
 //    qDebug() << "Width2 : " <<  this->width;
-    //listWidget->setIconSize(QSize(300, this->width));
-    listWidget->setIconSize(QSize(300, 400));
+    listWidget->setIconSize(QSize(this->width, this->height));
+    //listWidget->setIconSize(QSize(300, 400));
     listWidget->setResizeMode(QListWidget::Adjust);
     listWidget->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
 
     ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
     //Set working path
-    workingDirectory.setPath("D:/Content/");//QDir::currentPath() + "/");
+    workingDirectory.setPath("B:/Content/");//QDir::currentPath() + "/");
     ui->lineEdit->setText(workingDirectory.absolutePath() + "/");
     UpdateVisibleFiles();
 }
@@ -120,7 +125,7 @@ void Bucket::InitializeWindow()
 void Bucket::Open() {
     this->setVisible(true);
     QPropertyAnimation *animation = new QPropertyAnimation(this, "size");
-    animation->setDuration(200);
+    animation->setDuration(300);
 //    animation->setStartValue(QRect(this->pos().x(), this->pos().y(), width, 0));
 //    animation->setEndValue(QRect(this->pos().x(), this->pos().y(), width, height));
     animation->setStartValue(QSize(width, 0));
@@ -134,7 +139,7 @@ void Bucket::Open() {
 
 void Bucket::Close() {
     QPropertyAnimation *animation = new QPropertyAnimation(this, "size");
-    animation->setDuration(200);
+    animation->setDuration(300);
 //    animation->setStartValue(QRect(this->pos().x(), this->pos().y(), width, height));
 //    animation->setEndValue(QRect(this->pos().x(), this->pos().y(), width, 0));
     animation->setStartValue(QSize(width, height));
@@ -312,16 +317,19 @@ void Bucket::UpdateVisibleFiles() {
             for(auto i=0 ; i<listWidget->count() ; i++) {
                 QStringList stringList = listWidget->item(i)->text().split("/");
                 QString fileName = stringList.last();
-            //    qDebug() << "Comparing " << it.fileName() << " with" << fileName << ":" << fileName.compare(it.fileName());
-                if(fileName.compare(it.fileName()) > 0) {
+#ifdef DEBUG_BUCKET
+                qDebug() << "Comparing " << it.fileName() << " with" << fileName << ":" << fileName.compare(it.fileName());
+#endif
+                if(fileName.compare(it.fileName()) >= 0) {
             //        qDebug() << "File already visible";
                     addFile = false;
                     break;
                 }
             }
             if(addFile) {
+#ifdef DEBUG_BUCKET
                 qDebug() << "Adding new element : " << workingDirectory.absolutePath() << "/" << it.fileName() << it.fileInfo().suffix();
-
+#endif
                 QListWidgetItem* newItem = new QListWidgetItem();
                 if(IsImage(it.fileInfo().suffix())) {
                     newItem->setIcon(QIcon(workingDirectory.absolutePath() + "/" + it.fileName()));
@@ -411,17 +419,16 @@ void Bucket::listWidgetItemDoubleClicked(QListWidgetItem *item)
 
 void Bucket::on_openExplorerButton_clicked()
 {
+#ifdef DEBUG_BUCKET
     qDebug() << "Opening explorer .. " <<workingDirectory.absolutePath() ;
+#endif
     QString program = "explorer";
-       QStringList arguments;
-       QString tempPath = workingDirectory.absolutePath().replace("/", "\\");
-       arguments <<tempPath;// workingDirectory.absolutePath() + "/";
+    QStringList arguments;
+    QString cleanedPath = workingDirectory.absolutePath().replace("/", "\\");
+    arguments << cleanedPath;// workingDirectory.absolutePath() + "/";
 
-       QProcess *myProcess = new QProcess();
-       myProcess->start(program, arguments);
+    QProcess *myProcess = new QProcess();
+    myProcess->start(program, arguments);
 
-//    QProcess process;
-//    process.setWorkingDirectory(workingDirectory.absolutePath());
-//    process.start("exporer");//, QStringList() << "gui");
     QProcess::startDetached("git", QStringList() << "gui", "D:\\MyWork\\Temp\\source");
 }

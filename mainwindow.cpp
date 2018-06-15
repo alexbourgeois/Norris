@@ -82,15 +82,12 @@ void MainWindow::CreatePin(NodeWidget* node, QListWidgetItem* item) {
 void MainWindow::InitializeWindow()
 {
 	//QWidget::activateWindow();
-
-	Qt::WindowFlags flags;
-	flags |= Qt::FramelessWindowHint;
-	flags |= Qt::WindowStaysOnTopHint;
-	flags |= Qt::X11BypassWindowManagerHint;
-	this->setWindowFlags(flags);
     this->setAttribute(Qt::WA_TranslucentBackground);
-
-
+    Qt::WindowFlags flags = this->windowFlags();
+	flags |= Qt::FramelessWindowHint;
+	flags |= Qt::X11BypassWindowManagerHint;
+    flags |= Qt::WindowStaysOnTopHint;
+    this->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
 	
 	QRect rec = QApplication::desktop()->screenGeometry();
     height = rec.height();
