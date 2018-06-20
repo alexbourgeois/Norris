@@ -46,6 +46,7 @@ public:
 	QPoint Center();
 	QString GetName();
     QPoint BottomLeft();
+    void OpenBucket(bool open);
 
 	Node *node;
 	Bucket *bucket;
@@ -79,6 +80,7 @@ private:
     int _size;
 	int _screenWidth, _screenHeight;
 	bool isBucketOpened;
+    bool bucketWasOpen;
     bool isMoving;
 
     int displacementStartTime;

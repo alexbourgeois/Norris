@@ -139,15 +139,33 @@ void NodeWidget::DockingCompleted() {
     bucket->MoveTo(BottomLeft());
 }
 
+
+void NodeWidget::OpenBucket(bool open)
+{
+    if(settings.nodeType == NodeType::Trash) return;
+    if (open) {
+        bucket->Open();
+        isBucketOpened = true;
+        qDebug() << "Open";
+    }
+    else {
+        bucket->Close();
+        isBucketOpened = false;
+        qDebug() << "Close";
+    }
+}
+
 void NodeWidget::ToggleBucket()
 {
     if(settings.nodeType == NodeType::Trash) return;
     if (!bucket->isClosed) {
         bucket->Close();
+        isBucketOpened = false;
         qDebug() << "Close";
     }
     else {
         bucket->Open();
+        isBucketOpened = true;
         qDebug() << "Open";
     }
 }
@@ -319,10 +337,15 @@ void NodeWidget::mouseMoveEvent(QMouseEvent *event)
     if(settings.nodeType == NodeType::Trash) return;
 
     if (event->buttons() & Qt::LeftButton) {
+        if(!isMoving) {
+            bucketWasOpen = isBucketOpened;
+            if(isBucketOpened)
+                OpenBucket(false);
+        }
 		QPoint newPos = event->globalPos() - dragPosition;
         displacementLength += (newPos - pos()).manhattanLength();
 		QPoint differencePosition = newPos - pos(); //Then all his child with this node's delta
-        MoveTo(newPos.x(), newPos.y());//Firstly we mode the node
+        MoveTo(newPos.x(), newPos.y());//Firstly we move the node
         isMoving = true;
 	}
     event->accept();
@@ -331,6 +354,8 @@ void NodeWidget::mouseMoveEvent(QMouseEvent *event)
 void NodeWidget::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         isMoving = false;
+        if(bucketWasOpen)
+            OpenBucket(true);
         //Check if velocity was enough to dock node
        // int totalDisplacementLength = (displacementStartPosition - event->globalPos()).manhattanLength();
         float totalDisplacementTime = QTime::currentTime().msec() - displacementStartTime;

@@ -25,26 +25,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    bucket.cpp \
-    node.cpp \
-    nodewidget.cpp \
-    downloadmanager.cpp \
-    settings.cpp \
-    mimedata.cpp
+SOURCES += src/main.cpp\
+        src/mainwindow.cpp \
+    src/bucket.cpp \
+    src/node.cpp \
+    src/nodewidget.cpp \
+    src/downloadmanager.cpp \
+    src/settings.cpp \
+    src/mimedata.cpp
 
-HEADERS  += mainwindow.h \
-    bucket.hpp \
-    node.h \
-    nodewidget.h \
-    downloadmanager.h \
-    settings.h \
-    mimedata.h
+HEADERS  += src/mainwindow.h \
+    src/bucket.hpp \
+    src/node.h \
+    src/nodewidget.h \
+    src/downloadmanager.h \
+    src/settings.h \
+    src/mimedata.h
 
-FORMS    += mainwindow.ui \
-    node.ui \
-    trash.ui \
-    bucket.ui
+FORMS    += src/mainwindow.ui \
+    src/node.ui \
+    src/trash.ui \
+    src/bucket.ui
 
 RESOURCES += rsc.qrc
