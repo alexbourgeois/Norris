@@ -8,6 +8,7 @@ Bucket::Bucket(NodeSettings settings, QWidget * parent) :
 {
 	ui->setupUi(this);
 	InitializeWindow();
+    this->setStyleSheet(QString("background-color: rgba(255, 0, 0, 0);"));
 
     connect(ui->lineEdit, SIGNAL(editingFinished()), this, SLOT(setTargetDirectory()));
 
@@ -51,23 +52,29 @@ void Bucket::InitializeClip() {
     connect(listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(listWidgetItemDoubleClicked(QListWidgetItem*)));
 
     listWidget->setViewMode(QListWidget::IconMode);
-//    qDebug() << "Width : " << listWidget->width();
-//    qDebug() << "Width2 : " << listWidget->size().width();
-//    qDebug() << "Width2 : " <<  this->width;
-    listWidget->setIconSize(QSize(this->width, this->height));
+    //listWidget->verticalScrollBar()->setStyleSheet("QScrollBar:vertical { width: 100px; }");
+    listWidget->setIconSize(QSize(this->width - (this->width * 0.12), this->height));
     //listWidget->setIconSize(QSize(300, 400));
     listWidget->setResizeMode(QListWidget::Adjust);
-    listWidget->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
+    listWidget->setStyleSheet(QString("background-color: rgba(42, 41, 44, 255); border-color: rgba(42, 41, 44, 255);"));
+   // listWidget->setStyleSheet(QString("background-color: rgba(255,255,255,255); border-color: rgba(255,255,255,255);"));
+   // listWidget->setStyleSheet(QString("border-color: rgba(40, 40, 40, 191);"));
+    //listWidget->setStyleSheet(QString("border-color: rgba(255,255,255,255);"));
 
-    ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(255, 255, 255, 255);"));
+    ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(42, 41, 44, 255);"));
+    //ui->openExplorerButton->setStyleSheet(QString("border-color: rgba(255, 0, 0, 255);"));
+    //ui->openExplorerButton->setStyleSheet(ui->lineEdit->styleSheet());
     //Set working path
-    workingDirectory.setPath("B:/Content/");//QDir::currentPath() + "/");
+    workingDirectory.setPath("C:/Norris/");//QDir::currentPath() + "/");
     ui->lineEdit->setText(workingDirectory.absolutePath() + "/");
+    setTargetDirectory();
     UpdateVisibleFiles();
 }
 
 void Bucket::InitializePin(QString path) {
     QLabel *label = new QLabel(this);
+    //ui->openExplorerButton->destroy();
+    ui->openExplorerButton->setStyleSheet(QString("background-color: rgba(42, 41, 44, 255);"));
     ui->verticalLayout->addWidget(label);
     QPixmap pixmap(path);
     label->setPixmap(pixmap.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -320,7 +327,7 @@ void Bucket::UpdateVisibleFiles() {
 #ifdef DEBUG_BUCKET
                 qDebug() << "Comparing " << it.fileName() << " with" << fileName << ":" << fileName.compare(it.fileName());
 #endif
-                if(fileName.compare(it.fileName()) >= 0) {
+                if(fileName.compare(it.fileName()) == 0) {
             //        qDebug() << "File already visible";
                     addFile = false;
                     break;
@@ -362,8 +369,10 @@ void Bucket::dropEvent(QDropEvent *event) {
     //Add file from folder
     if(!mimeData->hasHtml() && mimeData->hasText()) {
         QStringList stringList = mimeData->text().split("/");
-        QFile::copy(mimeData->text(), this->workingDirectory.absolutePath() + "/" + stringList.last());
-        qDebug() << "Copying " << mimeData->text() << " in " << workingDirectory.absolutePath() << "/" << stringList.last();
+        auto cleanedFilePath =mimeData->text().remove(0,8);
+        if(QFile::copy(cleanedFilePath, this->workingDirectory.absolutePath() + "/" + stringList.last()))
+            UpdateVisibleFiles();
+        qDebug() << "Copying " << cleanedFilePath << " in " << workingDirectory.absolutePath() << "/" << stringList.last();
     }
 
     else if(IsImage(mimeData->text())) {

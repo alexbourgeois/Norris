@@ -20,7 +20,7 @@
    <string>NodeWidget</string>
   </property>
   <property name="autoFillBackground">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">

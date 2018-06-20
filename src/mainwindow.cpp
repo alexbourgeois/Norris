@@ -12,11 +12,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // ---- Shortcut
     QxtGlobalShortcut *launchShortcut = new QxtGlobalShortcut(this);
-    launchShortcut->setShortcut(QKeySequence("F2"));
+    launchShortcut->setShortcut(QKeySequence("Ctrl+F2"));
     QObject::connect(launchShortcut, SIGNAL(activated()), this, SLOT(ToggleNodeShortcut()));
 
     QxtGlobalShortcut *launchShortcut2 = new QxtGlobalShortcut(this);
-    launchShortcut2->setShortcut(QKeySequence("F1"));
+    launchShortcut2->setShortcut(QKeySequence("Ctrl+F1"));
     QObject::connect(launchShortcut2, SIGNAL(activated()), this, SLOT(ToggleUI()));
 
     // ---- Download Manager
@@ -81,13 +81,25 @@ void MainWindow::CreatePin(NodeWidget* node, QListWidgetItem* item) {
 
 void MainWindow::InitializeWindow()
 {
+    QFile f(":qdarkstyle/style.qss");
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+    }
+    this->setStyleSheet("background-color: rgba(0,125,0,0);");
 	//QWidget::activateWindow();
     this->setAttribute(Qt::WA_TranslucentBackground);
     Qt::WindowFlags flags = this->windowFlags();
 	flags |= Qt::FramelessWindowHint;
 	flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::WindowStaysOnTopHint;
-    this->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(flags);
 	
 	QRect rec = QApplication::desktop()->screenGeometry();
     height = rec.height();
@@ -95,8 +107,6 @@ void MainWindow::InitializeWindow()
 	this->resize(width, height);
 
     SetDay();
-
-
 }
 
 void MainWindow::ToggleNodeShortcut() {

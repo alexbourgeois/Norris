@@ -16,6 +16,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="acceptDrops">
     <bool>true</bool>
@@ -45,13 +48,6 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="openExplorerButton">
-           <property name="text">
-            <string>Open explorer</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLineEdit" name="lineEdit">
            <property name="styleSheet">
             <string notr="true">QLineEdit {background-color: rgb(42, 41, 44);color: rgb(232, 232, 232);
@@ -59,6 +55,19 @@ border-color: rgb(25, 26, 26); }</string>
            </property>
            <property name="text">
             <string>Target folder ...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="openExplorerButton">
+           <property name="autoFillBackground">
+            <bool>true</bool>
+           </property>
+           <property name="text">
+            <string>Show</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

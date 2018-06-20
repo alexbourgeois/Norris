@@ -47,4 +47,5 @@ FORMS    += src/mainwindow.ui \
     src/trash.ui \
     src/bucket.ui
 
-RESOURCES += rsc.qrc
+RESOURCES += Plugins/qdarkstyle/style.qrc \
+         rsc.qrc

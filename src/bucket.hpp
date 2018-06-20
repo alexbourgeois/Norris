@@ -2,7 +2,7 @@
 #ifndef BUCKET_H
 #define BUCKET_H
 
-
+#include <QScrollBar>
 #include <QScrollArea>
 #include <QWidget>
 #include <QMainWindow>

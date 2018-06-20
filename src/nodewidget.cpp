@@ -24,7 +24,6 @@ NodeWidget::NodeWidget(Node* node,QWidget *parent, int size, NodeSettings settin
 
     isBucketOpened = false;
     bucket = new Bucket(settings, this->nodeDrawer);
-    bucket->setStyleSheet(QString("background-color: rgba(255, 255, 255, 0);"));
     bucket->setVisible(false);
     bucket->move(BottomLeft());
     //ToggleBucket();
@@ -95,6 +94,7 @@ void NodeWidget::InitializeWindow()
     //     //flags |= Qt::WA_TranslucentBackground;
     this->setWindowFlags(flags2);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    //this;setStyleSheet(QString("background-color: rgba(255,0,0,255);");
 }
 
 void NodeWidget::InitializeName() {
@@ -102,13 +102,13 @@ void NodeWidget::InitializeName() {
     nodeName = new QLabel(node->GetName(), this);
     nodeName->setFont(QFont("Helvetica [Cronyx]", 11));
 
-    //Appearance
-    QPalette sample_palette;
-    sample_palette.setColor(QPalette::Window, Qt::transparent);
-    sample_palette.setColor(QPalette::WindowText, Qt::blue);
+//    //Appearance
+//    QPalette sample_palette;
+//    sample_palette.setColor(QPalette::Window, Qt::transparent);
+//    sample_palette.setColor(QPalette::WindowText, Qt::blue);
 
-    nodeName->setAutoFillBackground(true);
-    nodeName->setPalette(sample_palette);
+//    nodeName->setAutoFillBackground(true);
+//    nodeName->setPalette(sample_palette);
     nodeName->adjustSize();
     //Position
     auto namePosition = Center();
@@ -353,9 +353,12 @@ void NodeWidget::mouseMoveEvent(QMouseEvent *event)
 
 void NodeWidget::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
+        if(isMoving) {
+            if(bucketWasOpen)
+                OpenBucket(true);
+        }
         isMoving = false;
-        if(bucketWasOpen)
-            OpenBucket(true);
+
         //Check if velocity was enough to dock node
        // int totalDisplacementLength = (displacementStartPosition - event->globalPos()).manhattanLength();
         float totalDisplacementTime = QTime::currentTime().msec() - displacementStartTime;
