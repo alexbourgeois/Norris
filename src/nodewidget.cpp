@@ -143,12 +143,12 @@ void NodeWidget::DockingCompleted() {
 void NodeWidget::OpenBucket(bool open)
 {
     if(settings.nodeType == NodeType::Trash) return;
-    if (open) {
+    if (open && !isBucketOpened) {
         bucket->Open();
         isBucketOpened = true;
         qDebug() << "Open";
     }
-    else {
+    if(!open && isBucketOpened) {
         bucket->Close();
         isBucketOpened = false;
         qDebug() << "Close";
@@ -173,8 +173,7 @@ void NodeWidget::ToggleBucket()
 void NodeWidget::DockNode() {
     if(settings.nodeType == NodeType::Trash) return;
 
-    if(!bucket->isClosed)
-        bucket->Close();
+    OpenBucket(false);
 
     //Dock node
     QPropertyAnimation *animation = new QPropertyAnimation(this, "geometry");
