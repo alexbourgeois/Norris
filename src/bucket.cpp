@@ -55,7 +55,10 @@ void Bucket::InitializeClip() {
     //listWidget->verticalScrollBar()->setStyleSheet("QScrollBar:vertical { width: 100px; }");
     listWidget->setIconSize(QSize(this->width - (this->width * 0.12), this->height));
     //listWidget->setIconSize(QSize(300, 400));
+    listWidget->setDragEnabled(true);
+    listWidget->setDragDropMode(QAbstractItemView::DragDrop);
     listWidget->setResizeMode(QListWidget::Adjust);
+    listWidget->setMovement(QListView::Snap);
     listWidget->setStyleSheet(QString("background-color: rgba(42, 41, 44, 255); border-color: rgba(42, 41, 44, 255);"));
    // listWidget->setStyleSheet(QString("background-color: rgba(255,255,255,255); border-color: rgba(255,255,255,255);"));
    // listWidget->setStyleSheet(QString("border-color: rgba(40, 40, 40, 191);"));
@@ -236,6 +239,7 @@ void Bucket::createData(const QString &mimeType)
 
 void Bucket::startDrag()
 {
+    qDebug() << "Drag start";
     mimeData = new MimeData;
 
     connect(mimeData, SIGNAL(dataRequested(QString)),

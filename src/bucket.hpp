@@ -76,9 +76,9 @@ public slots:
 
 protected:
     virtual void enterEvent(QEvent* e);
-	void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
-    void dragLeaveEvent(QDragLeaveEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent *event) override;
+    void dragLeaveEvent(QDragLeaveEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 public:
     QDir workingDirectory;

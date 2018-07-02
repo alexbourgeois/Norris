@@ -69,6 +69,7 @@ void NodeWidget::SetNodeImage(QString fileName) {
     mypix = mypix.scaledToWidth(_size,Qt::SmoothTransformation);
     ui->label->setPixmap(mypix);
     ui->label->adjustSize();
+
     this->resize(this->size());
 
     //Open animation
@@ -292,19 +293,22 @@ void NodeWidget::enterEvent(QEvent* e) {
 	QWidget::enterEvent(e);
 
 	//_radius += _radius*int(50/100);
+//    float value = 100;
 
-	/*QPropertyAnimation animation(this, "geometry");
-	animation.setDuration(500);
-	animation.setStartValue(this->rect());
-	auto rect = this->rect();
-	rect.setX(rect.x() - value);
-	rect.setY(rect.y() - value);
-	rect.setWidth(rect.width() + value);
-	rect.setHeight(rect.height() + value);
+//    QPropertyAnimation* animation = new QPropertyAnimation(this, "geometry");
+//    animation->setDuration(500);
+//    animation->setStartValue(QRect(0, 0, 100, 30));
+//      animation->setEndValue(QRect(250, 250, 100, 30));
 
-	animation.setEndValue(rect);
+//    auto rect = this->rect();
+//    rect.setX(this->pos().x() - value);
+//    rect.setY(this->pos().y() - value);
+//    rect.setWidth(this->rect().width() + value);
+//    rect.setHeight(this->rect().height() + value);
 
-	animation.start();*/
+//    //animation.setEndValue(rect);
+
+//    animation->start();
 }
 
 void NodeWidget::leaveEvent(QEvent* e) {
