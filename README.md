@@ -1,4 +1,4 @@
-# Floating Folder
+# Norris
 
 Application always on top allowing you to easily work with your folders/files. 
 
@@ -24,7 +24,7 @@ Application always on top allowing you to easily work with your folders/files.
 
 
 Several shortcut are availables :
-  - "F1" to hide/show the application;
-  - "F2" to toggle every node;
+  - "Ctrl + F1" to hide/show the application;
+  - "Ctrl + F2" to toggle every node;
  
  
